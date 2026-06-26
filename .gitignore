@@ -42,9 +42,10 @@ temp/
 # Extracted spec (not needed in production)
 extracted/
 
-# Model caches (too large for git)
-models/
-voicepacks/
+# Model caches (too large for git) — anchored to repo root so the
+# backend/models/ Python package (schemas etc.) is NOT excluded.
+/models/
+/voicepacks/
 
 # Archive
 *.zip
