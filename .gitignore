@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+dist-electron/
+release/
+
+# Python
+backend/.venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/*.pyc
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# App data (local)
+*.db
+runtime.json
+
+# Logs
+*.log
+
+# Temp
+temp/
+*.tmp
+
+# Extracted spec (not needed in production)
+extracted/
+
+# Model caches (too large for git)
+models/
+voicepacks/
+
+# Archive
+*.zip
