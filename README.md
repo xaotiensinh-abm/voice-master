@@ -46,9 +46,9 @@
 |:---:|:---:|
 | ![Màn tạo giọng nói](docs/images/01-create-voice.png) | ![Trang kết nối Agent/API](docs/images/02-agent-connect.png) |
 
-| Tải mô hình lần đầu | Cài đặt & quản lý model |
+| Cài đặt & quản lý mô hình | Chẩn đoán hệ thống (GPU & engine) |
 |:---:|:---:|
-| ![Tải mô hình](docs/images/03-model-download.png) | ![Cài đặt](docs/images/04-settings.png) |
+| ![Cài đặt & quản lý mô hình](docs/images/03-model-download.png) | ![Chẩn đoán hệ thống](docs/images/04-settings.png) |
 
 ---
 
