@@ -54,6 +54,11 @@ export default function Sidebar({ activeScreen, onNavigate, connected, version }
         {version && (
           <div className="sidebar-version">v{version}</div>
         )}
+        <div className="sidebar-author">
+          <div className="sidebar-author-name">Tác giả: ABM · DũngTQ</div>
+          <a className="sidebar-author-phone" href="tel:0976202028">📞 0976202028</a>
+          <div className="sidebar-author-note">Liên hệ nếu cần thêm thông tin</div>
+        </div>
       </div>
     </aside>
   );

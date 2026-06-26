@@ -364,6 +364,36 @@ a:hover {
   margin-top: var(--space-1);
 }
 
+.sidebar-author {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-gray-100);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sidebar-author-name {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-gray-600);
+}
+
+.sidebar-author-phone {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary-600);
+}
+
+.sidebar-author-phone:hover {
+  color: var(--color-primary-700);
+}
+
+.sidebar-author-note {
+  font-size: 0.7rem;
+  color: var(--color-gray-400);
+}
+
 /* ── Page Headers ──────────────────────────────────────────── */
 .page-header {
   margin-bottom: var(--space-6);
