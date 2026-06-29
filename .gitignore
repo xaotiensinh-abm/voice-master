@@ -52,3 +52,6 @@ extracted/
 
 # Author signing keys (NEVER commit)
 tools/keys/
+
+# Release build staging (portable python/backend/ffmpeg runtime)
+release-staging/

@@ -8,6 +8,7 @@
     "dev:web": "vite --config vite.config.web.ts",
     "dev:electron": "vite & wait-on tcp:5173 && electron .",
     "build": "tsc && vite build && electron-builder --dir",
+    "build:installer": "tsc && vite build && electron-builder --win nsis",
     "lint": "eslint src/",
     "preview": "vite preview"
   },
@@ -24,9 +25,22 @@
       ],
       "icon": "public/icon.ico"
     },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Voice-Master"
+    },
     "files": [
       "dist/**/*",
       "dist-electron/**/*"
+    ],
+    "extraFiles": [
+      { "from": "release-staging/python", "to": "python" },
+      { "from": "release-staging/backend", "to": "backend" },
+      { "from": "release-staging/ffmpeg", "to": "ffmpeg" }
     ]
   },
   "dependencies": {

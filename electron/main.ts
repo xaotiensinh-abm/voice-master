@@ -70,6 +70,11 @@ function startPythonBackend(): void {
     const backendEnv = { ...process.env };
     if (isPackaged) {
       backendEnv.VOICE_MASTER_LICENSE_ENFORCED = '1';
+      // Bundled ffmpeg lives next to the exe (rootDir/ffmpeg/ffmpeg.exe).
+      const bundledFfmpeg = path.join(rootDir, 'ffmpeg', 'ffmpeg.exe');
+      if (fs.existsSync(bundledFfmpeg)) {
+        backendEnv.VOICE_MASTER_FFMPEG = bundledFfmpeg;
+      }
     }
 
     pythonProcess = spawn(pythonExecutable, args, {

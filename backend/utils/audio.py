@@ -329,6 +329,10 @@ def _atempo_filters(speed: float) -> list[str]:
 @lru_cache(maxsize=1)
 def _find_ffmpeg() -> str | None:
     """Find ffmpeg binary."""
+    # Packaged build points here at the bundled ffmpeg (set by electron/main.ts).
+    env_ff = os.environ.get("VOICE_MASTER_FFMPEG")
+    if env_ff and os.path.isfile(env_ff):
+        return env_ff
     path = shutil.which("ffmpeg")
     if path:
         return path
