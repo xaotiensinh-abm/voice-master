@@ -176,12 +176,14 @@ Thêm khối: `"license":{"state":"trial","enforced":true,"days_left":5}`.
 - `app.isPackaged` (electron) → khi spawn backend, set env `VOICE_MASTER_LICENSE_ENFORCED=true`
   (sửa `electron/main.ts startPythonBackend`: thêm `env: {...process.env, VOICE_MASTER_LICENSE_ENFORCED: '1'}`).
 
-**Backend CPU-only (nhẹ)**
-- Bundle riêng (không dùng .venv GPU hiện tại). Thành phần: Python portable (embeddable/relocatable) +
-  `vieneu` (minimal, **không torch**) + `onnxruntime` + `fastapi uvicorn pydantic cryptography huggingface_hub
-  aiosqlite mcp sse-starlette pydub soundfile`.
-- VieNeu v3 Turbo chạy **ONNX/CPU** (đã xác nhận trong `vieneu/factory.py`). Không kèm CUDA/torch.
-- `scripts/build_release.ps1`: dựng `python/` runtime CPU-only → đặt cạnh app (electron main tìm `rootDir/python/python.exe`).
+**Backend runtime (GPU mặc định, CPU tuỳ chọn)**
+- Bundle riêng: Python portable (embeddable) + `requirements-base.txt` (fastapi/uvicorn/pydantic/aiosqlite/
+  httpx/keyring/python-multipart/mcp/cryptography/huggingface_hub/onnxruntime/`vieneu`) + **ffmpeg.exe**.
+- **GPU (mặc định):** thêm `torch + torchaudio` (CUDA 12.1) → VieNeu dùng PyTorch trên máy NVIDIA; máy
+  không GPU tự fallback ONNX/CPU. **CPU (`-Cpu`):** bỏ torch (ONNX only, nhẹ).
+- Model **không nhúng** → khách bấm nút **Tải mô hình** lần đầu (ModelDownloadGate / Settings).
+- `scripts/build_backend_runtime.ps1` dựng `release-staging/{python,backend,ffmpeg}`; electron-builder
+  `extraFiles` đặt cạnh exe (electron main tìm `rootDir/python/python.exe`, `rootDir/ffmpeg/ffmpeg.exe`).
 
 **electron-builder**
 - `extraResources`: copy `backend/`, `python/`, `scripts/start_backend_detached.ps1` vào bản đóng gói.
