@@ -81,6 +81,21 @@ ELEVENLABS_BASE_URL = "https://api.elevenlabs.io"
 ELEVENLABS_DEFAULT_MODEL = "eleven_multilingual_v2"
 
 # ---------------------------------------------------------------------------
+# Licensing (see docs/licensing-packaging-spec.md)
+# ---------------------------------------------------------------------------
+# Enforcement is OFF by default (dev/source = demo). The packaged .exe sets
+# VOICE_MASTER_LICENSE_ENFORCED=1 when spawning the backend.
+LICENSE_ENFORCED = os.environ.get("VOICE_MASTER_LICENSE_ENFORCED", "").strip().lower() in (
+    "1", "true", "yes", "on",
+)
+# Fixed salt — DO NOT change after release (would change every machine_code).
+APP_SALT = os.environ.get("VOICE_MASTER_SALT", "voice-master-machine-salt-v1")
+# Best-effort tamper-evidence for the local trial record (symmetric; see spec §10).
+APP_HMAC_SECRET = os.environ.get("VOICE_MASTER_HMAC", "voice-master-trial-hmac-v1").encode("utf-8")
+TRIAL_DAYS = int(os.environ.get("VOICE_MASTER_TRIAL_DAYS", "7"))
+LICENSE_PATH = NEO_VOICE_HOME / "license.json"
+
+# ---------------------------------------------------------------------------
 # Load user overrides from config.json
 # ---------------------------------------------------------------------------
 _user_config: dict[str, Any] = {}

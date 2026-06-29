@@ -1,8 +1,9 @@
 # Kế hoạch — Đóng gói, HDSD, đẩy GitHub để chia sẻ (agent tự setup)
 
-> Trạng thái: PLAN (chưa code). Mục tiêu: bạn bè clone repo → **đưa cho agent của họ** →
-> agent tự cài đặt đầy đủ, **chạy backend ngầm trên PC** (không phụ thuộc phiên agent) →
-> kết nối MCP và tự dùng.
+> Trạng thái: ✅ ĐÃ TRIỂN KHAI (P1–P7, bỏ P8 theo lựa chọn). Repo:
+> https://github.com/xaotiensinh-abm/voice-master (Private). Đã verify clone sạch → `uv sync` → app boot OK.
+> Mục tiêu: bạn bè clone repo → **đưa cho agent của họ** → agent tự cài đặt đầy đủ,
+> **chạy backend ngầm trên PC** (không phụ thuộc phiên agent) → kết nối MCP và tự dùng.
 
 ## 0. Yêu cầu cốt lõi đã chốt
 - **Backend chạy ngầm như tiến trình độc lập trên PC** — không chết khi shell/phiên agent đóng.

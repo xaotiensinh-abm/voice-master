@@ -40,6 +40,12 @@ Vào trang **🔌 Kết nối Agent / API**: xem & copy endpoint (MCP `http://12
 REST base), cấu hình MCP để dán vào client (Claude/Cursor), danh sách tool, ví dụ vòng lặp,
 và hướng dẫn chèn cảm xúc cho agent.
 
+## 5b. Bản quyền / Kích hoạt (tab 🔑 Bản quyền)
+- Bản .exe: **dùng thử 7 ngày**. Sidebar hiện "Dùng thử: còn N ngày".
+- Hết hạn → không tạo được voice. Vào tab **Bản quyền**: copy **Mã máy** (dạng `XXXX-XXXX-XXXX-XXXX`),
+  gửi cho tác giả (📞 0976202028) để nhận **mã đăng ký**, dán vào ô và bấm **Kích hoạt**.
+- Bản chạy từ mã nguồn (demo) không khoá license.
+
 ## 6. Cài đặt
 - **Mô hình**: trạng thái/dung lượng/đường dẫn cache, tải lại, xoá.
 - **ElevenLabs** (tuỳ chọn): nhập API key để dùng giọng cloud (gửi văn bản lên máy chủ ElevenLabs).

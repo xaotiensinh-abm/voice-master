@@ -45,6 +45,18 @@ async def create_job(request: JobCreateRequest) -> JobResponse:
     
     Spec §05: POST /v1/tts/jobs
     """
+    # License gate (single chokepoint for REST + MCP). No-op when enforcement is
+    # off (dev/demo). See docs/licensing-packaging-spec.md §5.
+    from services import license_service
+
+    if not license_service.is_allowed():
+        status = license_service.get_status()
+        raise HTTPException(
+            status_code=402,
+            detail=make_error("LICENSE_REQUIRED").model_dump()
+            | {"machine_code": status["machine_code"], "days_left": status["days_left"] or 0},
+        )
+
     # Validate voice
     try:
         adapter = get_adapter(request.voice_id)

@@ -49,3 +49,6 @@ extracted/
 
 # Archive
 *.zip
+
+# Author signing keys (NEVER commit)
+tools/keys/

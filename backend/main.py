@@ -166,6 +166,7 @@ from routers.settings import router as settings_router
 from routers.diagnostics import router as diagnostics_router
 from routers.history import router as history_router
 from routers.models import router as models_router
+from routers.license import router as license_router
 
 app.include_router(health_router)
 app.include_router(voices_router)
@@ -174,6 +175,7 @@ app.include_router(settings_router)
 app.include_router(diagnostics_router)
 app.include_router(history_router)
 app.include_router(models_router)
+app.include_router(license_router)
 
 # ───────────────────── MCP Server ──────────────────────────────────
 # Primary (modern) transport: Streamable HTTP at POST/GET /mcp — recommended for

@@ -114,6 +114,12 @@ Bộ tool: `list_voices`, `get_model_status`, `ensure_model_ready`, `synthesize`
 
 ---
 
+## 🔑 Bản quyền & dùng thử
+- **Bản chạy từ repo (demo/test): KHÔNG khoá** — dùng thoải mái để thử nghiệm.
+- **Bản .exe phát hành:** tự động **dùng thử 7 ngày**/máy; hết hạn cần **mã đăng ký theo máy**.
+  Trong app mở tab **🔑 Bản quyền** → copy **Mã máy** → gửi tác giả nhận mã → dán & Kích hoạt.
+- Tác giả cấp mã bằng `tools/license_gen.py` (xem [tools/README.md](tools/README.md)).
+
 ## 📚 Tài liệu
 - [AGENT_SETUP.md](AGENT_SETUP.md) — agent tự cài đặt & sử dụng
 - [docs/agent-api.md](docs/agent-api.md) — API/MCP + cách chèn cảm xúc

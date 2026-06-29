@@ -34,6 +34,8 @@ class ErrorCode(str, Enum):
     MP3_EXPORT_FAILED = "MP3_EXPORT_FAILED"
     WORKER_CRASHED = "WORKER_CRASHED"
     JOB_NOT_FOUND = "JOB_NOT_FOUND"
+    LICENSE_REQUIRED = "LICENSE_REQUIRED"
+    LICENSE_INVALID = "LICENSE_INVALID"
 
 
 # Map error codes → Vietnamese UI messages
@@ -52,6 +54,8 @@ ERROR_MESSAGES: dict[str, str] = {
     "MP3_EXPORT_FAILED": "Không xuất được MP3. Kiểm tra ffmpeg/logs.",
     "WORKER_CRASHED": "Worker bị lỗi. App đã ghi log và có thể retry.",
     "JOB_NOT_FOUND": "Không tìm thấy job.",
+    "LICENSE_REQUIRED": "Hết hạn dùng thử. Vui lòng kích hoạt bằng mã đăng ký.",
+    "LICENSE_INVALID": "Mã đăng ký không hợp lệ hoặc không khớp máy này.",
 }
 
 
@@ -86,6 +90,32 @@ class HealthResponse(BaseModel):
     # Per-engine max chars/chunk so the UI segment estimate stays in sync with
     # the backend chunker (services/text_pipeline.py) instead of hardcoding.
     max_chars_per_chunk: dict[str, int] = {}
+    # License summary (state/enforced/days_left). None = not applicable.
+    license: dict[str, Any] | None = None
+
+
+# ───────────────────────────── License ────────────────────────────
+
+
+class LicenseStatusResponse(BaseModel):
+    state: str = "dev"  # dev | trial | licensed | expired | invalid
+    enforced: bool = False
+    days_left: int | None = None
+    machine_code: str = ""
+    exp: str | None = None
+    tier: str | None = None
+    reason: str | None = None
+
+
+class LicenseActivateRequest(BaseModel):
+    key: str
+
+
+class LicenseActivateResponse(BaseModel):
+    ok: bool
+    state: str | None = None
+    exp: str | None = None
+    message: str = ""
 
 
 # ───────────────────────────── Models (download) ──────────────────
