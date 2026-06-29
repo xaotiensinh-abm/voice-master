@@ -70,6 +70,8 @@ class EngineStatus(BaseModel):
     # None for engines where it does not apply (e.g. cloud). For VieNeu: whether
     # the local model has been downloaded to the HuggingFace cache.
     model_downloaded: bool | None = None
+    # Compute device the loaded engine runs on: "cuda:0" | "cpu" | None.
+    device: str | None = None
 
 
 class GPUInfo(BaseModel):

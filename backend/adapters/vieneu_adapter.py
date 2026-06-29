@@ -74,9 +74,21 @@ class VieneuAdapter(TTSEngineAdapter):
     def __init__(self) -> None:
         self._tts: Any = None
         self._loaded = False
+        self._device = "unknown"  # "cuda:0" | "cpu" once loaded
         self._loading_lock = asyncio.Lock()
         self._synth_lock = asyncio.Lock()
         self._voices: list[VoiceInfo] = []
+
+    def _resolve_device_label(self, use_cuda: bool) -> str:
+        """Best-effort label of the device the loaded engine runs on."""
+        try:
+            eng = getattr(self._tts, "engine", None)
+            dev = getattr(eng, "device", None)
+            if dev is not None:
+                return str(dev)
+        except Exception:
+            pass
+        return "cuda" if use_cuda else "cpu"
 
     def health(self) -> EngineHealth:
         """Health works even before preload."""
@@ -91,7 +103,7 @@ class VieneuAdapter(TTSEngineAdapter):
 
         downloaded = model_manager.is_downloaded()
         if self._loaded:
-            return EngineHealth(status="ready", loaded=True, model_downloaded=downloaded)
+            return EngineHealth(status="ready", loaded=True, model_downloaded=downloaded, device=self._device)
         return EngineHealth(status="available", loaded=False, model_downloaded=downloaded)
 
     def preload(self) -> None:
@@ -103,9 +115,25 @@ class VieneuAdapter(TTSEngineAdapter):
         try:
             from vieneu import Vieneu  # type: ignore
 
-            self._tts = Vieneu()
+            # Default to GPU 100% when a CUDA GPU is present: force the PyTorch
+            # engine on cuda instead of relying on "auto" (which can fall back to
+            # ONNX/CPU). Fall back to ONNX/CPU only when CUDA is unavailable.
+            use_cuda = False
+            try:
+                import torch  # only present in the GPU build
+
+                use_cuda = bool(torch.cuda.is_available())
+            except Exception:
+                use_cuda = False
+
+            if use_cuda:
+                self._tts = Vieneu(device="cuda", backend="pytorch")
+            else:
+                self._tts = Vieneu()
+
+            self._device = self._resolve_device_label(use_cuda)
             self._loaded = True
-            logger.info("VieNeu engine loaded successfully")
+            logger.info("VieNeu engine loaded on %s", self._device)
         except Exception as e:
             logger.error("VieNeu preload failed: %s", e)
             self._loaded = False

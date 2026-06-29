@@ -18,12 +18,14 @@ class EngineHealth:
         gpu_required: bool = False,
         error: str | None = None,
         model_downloaded: bool | None = None,
+        device: str | None = None,
     ):
         self.status = status
         self.loaded = loaded
         self.gpu_required = gpu_required
         self.error = error
         self.model_downloaded = model_downloaded
+        self.device = device
 
     def to_engine_status(self) -> EngineStatus:
         return EngineStatus(
@@ -32,6 +34,7 @@ class EngineHealth:
             gpu_required=self.gpu_required,
             error=self.error,
             model_downloaded=self.model_downloaded,
+            device=self.device,
         )
 
 
