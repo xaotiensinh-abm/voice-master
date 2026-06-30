@@ -39,19 +39,30 @@ if (-not (Test-Path (Join-Path $pyDir 'python.exe'))) {
     $getpip = Join-Path $tmp 'get-pip.py'
     Invoke-WebRequest -Uri $GETPIP_URL -OutFile $getpip
     & (Join-Path $pyDir 'python.exe') $getpip --no-warn-script-location
+    if ($LASTEXITCODE -ne 0) { Write-Error "pip bootstrap failed."; exit 1 }
 }
 
 $py = Join-Path $pyDir 'python.exe'
 
-# 2) Base dependencies -----------------------------------------------------
-Write-Host "Installing base dependencies..."
-& $py -m pip install --no-warn-script-location -r (Join-Path $backend 'requirements-base.txt')
-
-# 2b) GPU: torch + torchaudio (CUDA) --------------------------------------
-if (-not $Cpu) {
+# 2) torch FIRST. `vieneu` depends on torch, so installing the base set first
+#    makes pip pull a CPU torch from PyPI during resolve (and can abort the whole
+#    base install). Install the correct torch build up front so the dep is satisfied.
+if ($Cpu) {
+    Write-Host "Installing torch + torchaudio (CPU)..."
+    & $py -m pip install --no-warn-script-location torch torchaudio
+} else {
     Write-Host "Installing torch + torchaudio (CUDA) from $TORCH_INDEX (large, several GB)..."
     & $py -m pip install --no-warn-script-location torch torchaudio --index-url $TORCH_INDEX
-    Write-Host "torch import check:"
+}
+if ($LASTEXITCODE -ne 0) { Write-Error "torch install failed."; exit 1 }
+
+# 3) Base dependencies -----------------------------------------------------
+Write-Host "Installing base dependencies..."
+& $py -m pip install --no-warn-script-location -r (Join-Path $backend 'requirements-base.txt')
+if ($LASTEXITCODE -ne 0) { Write-Error "base deps install failed."; exit 1 }
+
+if (-not $Cpu) {
+    Write-Host "torch CUDA check:"
     & $py -c "import torch; print('  torch', torch.__version__, '| cuda build:', torch.version.cuda, '| cuda available:', torch.cuda.is_available())"
     if ($LASTEXITCODE -ne 0) { Write-Error "torch import failed in portable runtime."; exit 1 }
 }
