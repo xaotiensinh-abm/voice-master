@@ -106,12 +106,6 @@ Có thể tinh chỉnh thêm `speed` (0.5–2.0).
 | `AUDIO_TOO_LARGE` | file > 25MB khi xin base64 |
 | `TIMEOUT` | `wait_for_job` hết giờ |
 | `INVALID_REQUEST` / `WORKER_CRASHED` / `UNKNOWN_TOOL` | tham số sai / lỗi nội bộ / sai tên tool |
-| `LICENSE_REQUIRED` | (chỉ bản .exe) hết hạn dùng thử — kèm `machine_code` + `days_left`; báo người dùng kích hoạt |
-| `LICENSE_INVALID` | mã đăng ký sai/không khớp máy |
-
-> Bản chạy từ **repo/source = demo, không khoá license**. Bản **.exe** có thể trả `LICENSE_REQUIRED`
-> khi hết 7 ngày dùng thử — khi đó `synthesize` trả `{"error_code":"LICENSE_REQUIRED","machine_code":"...","days_left":0}`;
-> agent nên hiển thị `machine_code` để người dùng xin mã kích hoạt (tab Bản quyền).
 
 ## 4. Vòng lặp đầy đủ (MCP)
 

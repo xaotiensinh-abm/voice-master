@@ -6,10 +6,9 @@ import History from './components/History';
 import Settings from './components/Settings';
 import Diagnostics from './components/Diagnostics';
 import AgentConnect from './components/AgentConnect';
-import License from './components/License';
 import { useHealth } from './hooks/useHealth';
 
-type Screen = 'create' | 'library' | 'history' | 'settings' | 'diagnostics' | 'agent' | 'license';
+type Screen = 'create' | 'library' | 'history' | 'settings' | 'diagnostics' | 'agent';
 
 export default function App() {
   const [activeScreen, setActiveScreen] = useState<Screen>('create');
@@ -29,8 +28,6 @@ export default function App() {
         return <Diagnostics health={health} />;
       case 'agent':
         return <AgentConnect health={health} />;
-      case 'license':
-        return <License />;
       default:
         return <CreateVoice health={health} />;
     }
@@ -43,7 +40,6 @@ export default function App() {
         onNavigate={setActiveScreen}
         connected={health.connected}
         version={health.version}
-        license={health.data?.license}
       />
       <main className="app-content">
         {renderScreen()}

@@ -61,27 +61,6 @@ export interface HealthResponse {
   engines: Record<EngineName, EngineStatus>;
   gpu: GPUInfo;
   max_chars_per_chunk?: Record<string, number>;
-  license?: { state: LicenseState; enforced: boolean; days_left: number | null } | null;
-}
-
-// ── License ─────────────────────────────────────────────────
-export type LicenseState = 'dev' | 'trial' | 'licensed' | 'expired' | 'invalid';
-
-export interface LicenseStatus {
-  state: LicenseState;
-  enforced: boolean;
-  days_left: number | null;
-  machine_code: string;
-  exp?: string | null;
-  tier?: string | null;
-  reason?: string | null;
-}
-
-export interface LicenseActivateResponse {
-  ok: boolean;
-  state?: string | null;
-  exp?: string | null;
-  message: string;
 }
 
 // ── Voice ───────────────────────────────────────────────────

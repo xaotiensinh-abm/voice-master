@@ -112,10 +112,6 @@ export default function CreateVoice({ health }: CreateVoiceProps) {
   const showModelGate =
     selectedVoice?.engine === 'vieneu' && !model.loading && !model.downloaded;
 
-  // License gate: enforced build + trial expired / invalid key blocks voice creation.
-  const lic = health.data?.license;
-  const licenseBlocked = !!lic?.enforced && (lic.state === 'expired' || lic.state === 'invalid');
-
   // Insert an inline emotion tag at the cursor position in the textarea
   const insertEmotionTag = useCallback((tag: string) => {
     setInputTab('text');
@@ -209,7 +205,6 @@ export default function CreateVoice({ health }: CreateVoiceProps) {
     selectedVoice &&
     selectedVoice.available &&
     !showModelGate &&
-    !licenseBlocked &&
     ((inputTab === 'text' && textInput.trim().length > 0) ||
       (inputTab === 'file' && fileInfo)) &&
     !creating &&
@@ -221,17 +216,6 @@ export default function CreateVoice({ health }: CreateVoiceProps) {
         <h1 className="page-title">Tạo giọng nói</h1>
         <p className="page-subtitle">Chọn giọng, nhập văn bản và tạo file MP3 chất lượng cao</p>
       </div>
-
-      {licenseBlocked && (
-        <div className="card" style={{ maxWidth: 880, margin: '0 auto var(--space-4)', borderColor: 'var(--color-error-200, #fecaca)' }}>
-          <div style={{ fontWeight: 600, color: 'var(--color-error-700, #b91c1c)', marginBottom: 'var(--space-1)' }}>
-            ⚠️ {lic?.state === 'expired' ? 'Hết hạn dùng thử' : 'Mã đăng ký không hợp lệ'}
-          </div>
-          <div className="text-sm text-muted">
-            Không thể tạo giọng nói cho tới khi kích hoạt. Mở tab <strong>🔑 Bản quyền</strong> để nhập mã đăng ký.
-          </div>
-        </div>
-      )}
 
       <div className="create-form">
         {/* ── 1. Voice selection ──────────────────────────────── */}
