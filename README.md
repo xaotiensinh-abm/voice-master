@@ -59,9 +59,11 @@
 ### Cách A — Đưa cho Agent (khuyên dùng để chia sẻ) 🤖
 Clone repo, rồi đưa file [`AGENT_SETUP.md`](AGENT_SETUP.md) cho AI agent của bạn. Agent chỉ cần chạy **một lệnh**:
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts\setup.ps1
+powershell -ExecutionPolicy Bypass -File scripts\setup.ps1        # CPU/ONNX (mọi máy)
+powershell -ExecutionPolicy Bypass -File scripts\setup.ps1 -Gpu   # + CUDA torch (máy NVIDIA)
 ```
-→ tự cài dependencies + **bật backend chạy ngầm** ở `http://127.0.0.1:8757`.
+→ tự cài `uv` + `ffmpeg` + dependencies (vieneu/onnxruntime…) + **bật backend chạy ngầm** ở `http://127.0.0.1:8757`.
+Mặc định chạy **CPU/ONNX** (chạy được mọi máy); thêm `-Gpu` nếu có **GPU NVIDIA** để render nhanh hơn.
 Sau đó agent nối **MCP** `http://127.0.0.1:8757/mcp` và tự tạo voice. Xong! 🎉
 
 ### Cách B — Dùng giao diện (cho người dùng thường) 🖥️

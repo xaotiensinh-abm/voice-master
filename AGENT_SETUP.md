@@ -13,11 +13,13 @@
 Mở PowerShell tại thư mục dự án rồi chạy:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts\setup.ps1
+powershell -ExecutionPolicy Bypass -File scripts\setup.ps1        # CPU/ONNX (mọi máy)
+powershell -ExecutionPolicy Bypass -File scripts\setup.ps1 -Gpu   # + CUDA torch (máy NVIDIA)
 ```
 
-Script này sẽ: (1) cài `uv` nếu thiếu → (2) `uv sync` cài dependencies backend vào
-`backend\.venv` → (3) khởi động backend **chạy ngầm** tại `http://127.0.0.1:8757`.
+Script này sẽ: (1) cài `uv` + `ffmpeg` nếu thiếu → (2) `uv sync` cài dependencies backend
+(vieneu, onnxruntime…) vào `backend\.venv` → (3) khởi động backend **chạy ngầm** tại
+`http://127.0.0.1:8757`. Mặc định **CPU/ONNX** (chạy mọi máy); `-Gpu` cài CUDA torch để dùng GPU NVIDIA.
 
 (Tùy chọn) Tự khởi động backend mỗi lần đăng nhập Windows:
 ```powershell

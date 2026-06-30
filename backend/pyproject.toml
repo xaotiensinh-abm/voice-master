@@ -12,6 +12,13 @@ dependencies = [
     "keyring>=25.2.0",
     "python-multipart>=0.0.9",
     "mcp>=1.28.0",
+    # Runtime engine + model + license (required for the app to actually work).
+    # `vieneu` pulls torch (CPU by default → ONNX/CPU synthesis works everywhere).
+    # For NVIDIA GPU, reinstall CUDA torch after sync (see README "GPU").
+    "vieneu>=3.0.0",
+    "onnxruntime>=1.17.0",
+    "huggingface_hub>=0.23.0",
+    "cryptography>=42.0.0",
 ]
 
 [project.optional-dependencies]
